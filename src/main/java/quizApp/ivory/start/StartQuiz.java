@@ -1,5 +1,6 @@
 package quizApp.ivory.start;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class StartQuiz
 		{
 		case 1:
 			ArrayList<String> avlQuizzes = new QuizHelper().displayAvailableQuizzes();
-			System.out.println("Enter appropriate quiz index [1-" + avlQuizzes.size() + "] to attempt:" );
+			System.out.println(MessageFormat.format("Enter appropriate quiz index [1 - {0}] to attempt", avlQuizzes.size()));
 			
 			int quizChoice = 0;
 			try 
@@ -116,7 +117,7 @@ public class StartQuiz
 				
 				if(1 <= attemptChoice && attemptChoice <= attemptQuizzes.size())
 				{
-					new Attempt().viewAttempt(attemptQuizzes.get(attemptChoice-1));
+					student.viewAttempt(attemptQuizzes.get(attemptChoice-1));
 				}
 				else
 				{
