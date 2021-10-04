@@ -23,11 +23,6 @@ public class Attempt
 	private Student student;
 	private Quiz quiz;
 	
-	public Attempt()
-	{
-		
-	}
-	
 	public Attempt(Student student, Quiz quiz)
 	{
 		this.student = student;
