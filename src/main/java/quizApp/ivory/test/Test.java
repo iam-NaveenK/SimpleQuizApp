@@ -1,20 +1,26 @@
 package quizApp.ivory.test;
 
+import quizApp.ivory.constants.*;
+
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;;
 
 public class Test {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+
+	public static void main(String[] args) throws IOException, URISyntaxException {
 
         Test app = new Test();
+        
+        System.out.println(MessageFormat.format(Constants.INVAL_CHOICE,1));
         
         Logger log = Logger.getLogger("Logger");
         log.setLevel(Level.ALL);

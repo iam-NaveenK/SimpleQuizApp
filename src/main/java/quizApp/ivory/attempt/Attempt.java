@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -19,14 +20,27 @@ import quizApp.ivory.student.*;
 
 public class Attempt 
 {
-	private static final String ATTEMPTS_PATH = "..\\QuizApp5\\resources\\Attempts\\";
 	private Student student;
 	private Quiz quiz;
+	
+	public Attempt()
+	{
+		
+	}
 	
 	public Attempt(Student student, Quiz quiz)
 	{
 		this.student = student;
 		this.quiz = quiz;
+	}
+	
+	public String getAttemptsPath()
+	{
+		ClassLoader classLoader = getClass().getClassLoader();
+		
+		URL resource = classLoader.getResource("Attempts/");
+		
+		return resource.getPath();
 	}
 	
 	/**
@@ -130,7 +144,7 @@ public class Attempt
 		
 		try 
 		{
-		String attemptPath = ATTEMPTS_PATH + this.student.getUserID() + "_" + 
+		String attemptPath = getAttemptsPath() + this.student.getUserID() + "_" + 
 		this.quiz.getQuizName() + "_Attempt" + attemptNo() + ".json";
 		PrintWriter pw = new PrintWriter(attemptPath);
 		pw.write(jquiz.toJSONString());
@@ -160,7 +174,7 @@ public class Attempt
 		
 		try
 		{
-			directory = new File(ATTEMPTS_PATH);
+			directory = new File(getAttemptsPath());
 			
 			for(String attempt : directory.list())
 			{
@@ -186,10 +200,10 @@ public class Attempt
 	 * This method reads the json file of the saved attempt and displays it to the user in text format
 	 * @param attemptName : the attempt user want to have a look at
 	 */
-	public static void viewAttempt(String attemptName)
+	public void viewAttempt(String attemptName)
 	{
 		try {
-		String attemptPath = ATTEMPTS_PATH + attemptName; 
+		String attemptPath = getAttemptsPath() + attemptName; 
 		Object obj = new JSONParser().parse(new FileReader(attemptPath));
 		JSONObject jo = (JSONObject) (obj);
 		

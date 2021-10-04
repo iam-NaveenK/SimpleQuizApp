@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -15,11 +16,21 @@ import com.google.gson.GsonBuilder;
 
 public class StudentHelper 
 {
-	private static final String LOGIN_PATH = "..\\QuizApp5\\resources\\Users\\StudentLogin.json";
-	private static final String DETAILS_PATH = "..\\QuizApp5\\resources\\Users\\StudentDetails.json";
+	public String getLoginPath()
+	{
+		ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Users/StudentLogin.json");
+        return resource.getPath();
+	}
 	
+	public String getDetailsPath()
+	{
+		ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Users/StudentDetails.json");
+        return resource.getPath();
+	}
 	
-	public static JSONObject isPresent(String userID,String path) throws IOException, ParseException
+	public JSONObject isPresent(String userID,String path) throws IOException, ParseException
 	{
 		Object obj = new JSONParser().parse(new FileReader(path));
 		JSONArray ja = (JSONArray) (obj);
@@ -34,14 +45,14 @@ public class StudentHelper
 		return jo;
 	}
 	
-	public static JSONObject getLogin(String userID) throws IOException, ParseException
+	public JSONObject getLogin(String userID) throws IOException, ParseException
 	{
-		return isPresent(userID, LOGIN_PATH);
+		return isPresent(userID, getLoginPath());
 	}
 	
-	public static JSONObject getDetails(String userID) throws IOException, ParseException
+	public JSONObject getDetails(String userID) throws IOException, ParseException
 	{
-		return isPresent(userID,DETAILS_PATH);
+		return isPresent(userID,getDetailsPath());
 	}
 	
 	/**
@@ -50,7 +61,7 @@ public class StudentHelper
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static Student login() throws IOException, ParseException
+	public Student login() throws IOException, ParseException
 	{
 		Student student = null;
 		
@@ -95,7 +106,7 @@ public class StudentHelper
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static Student register() throws IOException, ParseException
+	public Student register() throws IOException, ParseException
 	{
 		Student student = null;
 		System.out.println("Enter the user ID :");
@@ -131,22 +142,22 @@ public class StudentHelper
 			juserLogin.put("userID", userID);
 			juserLogin.put("password", password);
 			
-			Object obj = new JSONParser().parse(new FileReader(DETAILS_PATH));
+			Object obj = new JSONParser().parse(new FileReader(getDetailsPath()));
 			JSONArray jaDetails = (JSONArray) (obj);
 			
-			obj = new JSONParser().parse(new FileReader(LOGIN_PATH));
+			obj = new JSONParser().parse(new FileReader(getLoginPath()));
 			JSONArray jaLogin = (JSONArray) (obj);
 			
 			jaDetails.add(juser);
 			
 			jaLogin.add(juserLogin);
 			
-			PrintWriter pw = new PrintWriter(DETAILS_PATH);
+			PrintWriter pw = new PrintWriter(getDetailsPath());
 			pw.write(jaDetails.toJSONString());
 			pw.flush();
 			pw.close();
 			
-			PrintWriter pw2 = new PrintWriter(LOGIN_PATH);
+			PrintWriter pw2 = new PrintWriter(getLoginPath());
 			pw2.write(jaLogin.toJSONString());
 			pw2.flush();
 			pw2.close();
@@ -162,7 +173,7 @@ public class StudentHelper
 		return student;
 	}
 	
-	public static String getUserID()
+	public String getUserID()
 	{
 		Scanner in = new Scanner(System.in);
 		String userID = null;
@@ -190,7 +201,7 @@ public class StudentHelper
 		return userID;
 	}
 	
-	public static String getPassword()
+	public String getPassword()
 	{
 		Scanner in = new Scanner(System.in);
 		String password = null;
@@ -218,7 +229,7 @@ public class StudentHelper
 		return password;
 	}
 	
-	public static String getName()
+	public String getName()
 	{
 		Scanner in = new Scanner(System.in);
 		String name = null;
@@ -242,7 +253,7 @@ public class StudentHelper
 		return name;
 	}
 	
-	public static int getAge()
+	public int getAge()
 	{
 		int age = 0;
 		boolean status = true;

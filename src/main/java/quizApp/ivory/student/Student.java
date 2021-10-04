@@ -1,11 +1,11 @@
 package quizApp.ivory.student;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Student
 {
-	private static final String ATTEMPTS_PATH = "..\\QuizApp5\\resources\\Attempts\\";
 	private String userID;
 	private int age;
 	private String name;
@@ -15,6 +15,15 @@ public class Student
 		this.userID = userID;		
 		this.age = age;
 		this.name = name;
+	}
+	
+	public String getAttemptsPath()
+	{
+		ClassLoader classLoader = getClass().getClassLoader();
+		
+		URL resource = classLoader.getResource("Attempts/");
+		
+		return resource.getPath();
 	}
 	
 	/**
@@ -30,7 +39,7 @@ public class Student
 		
 		try
 		{
-			directory = new File(ATTEMPTS_PATH);
+			directory = new File(getAttemptsPath());
 			
 			for(String attempt : directory.list())
 			{

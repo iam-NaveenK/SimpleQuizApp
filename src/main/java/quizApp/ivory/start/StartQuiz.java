@@ -40,7 +40,7 @@ public class StartQuiz
 		switch(choice)
 		{
 		case 1:
-			ArrayList<String> avlQuizzes = QuizHelper.displayAvailableQuizzes();
+			ArrayList<String> avlQuizzes = new QuizHelper().displayAvailableQuizzes();
 			System.out.println("Enter appropriate quiz index [1-" + avlQuizzes.size() + "] to attempt:" );
 			
 			int quizChoice = 0;
@@ -55,7 +55,7 @@ public class StartQuiz
 			
 			if(1 <= quizChoice && quizChoice <= avlQuizzes.size())
 			{
-				Quiz quiz = QuizHelper.getQuiz(avlQuizzes.get(quizChoice-1));
+				Quiz quiz = new QuizHelper().getQuiz(avlQuizzes.get(quizChoice-1));
 				
 				if(quiz == null)
 				{
@@ -116,7 +116,7 @@ public class StartQuiz
 				
 				if(1 <= attemptChoice && attemptChoice <= attemptQuizzes.size())
 				{
-					Attempt.viewAttempt(attemptQuizzes.get(attemptChoice-1));
+					new Attempt().viewAttempt(attemptQuizzes.get(attemptChoice-1));
 				}
 				else
 				{
@@ -166,7 +166,7 @@ public class StartQuiz
 		switch(choice)
 		{
 		case 1: //moduralize
-			student = StudentHelper.login();
+			student = new StudentHelper().login();
 			
 			
 			if(student != null)
@@ -182,7 +182,7 @@ public class StartQuiz
 			break;
 			
 		case 2:
-			student = StudentHelper.register();
+			student = new StudentHelper().register();
 			
 			if(student != null)
 			{

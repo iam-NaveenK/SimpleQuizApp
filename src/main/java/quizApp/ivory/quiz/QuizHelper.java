@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,14 +20,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class QuizHelper 
-{
-	private static final String QUIZ_PATH = "..\\QuizApp5\\resources\\Quizzes\\";
-	
+{	
 	/**
 	 * This method is useful while taking input from the user for a quiz question
 	 * Asks the user right input until provided
 	 * @return the choice user made {1,2,3,4} for the given question as an integer
 	 */
+	
+	public String getQuizFilePath(String quizName)
+	{
+		ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Quizzes/"+quizName);
+        return resource.getPath();
+	}
+	
 	public static  int getAnswer()
 	{
 		Scanner in = new Scanner(System.in);
@@ -56,9 +64,12 @@ public class QuizHelper
 	 * This method will display all the available quizzes for the user to attempt
 	 * @return quiz file names in a array list
 	 */
-	public static ArrayList<String> displayAvailableQuizzes()
+	public ArrayList<String> displayAvailableQuizzes()
 	{
-		File directory = new File(QUIZ_PATH);
+		ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Quizzes/");
+        
+		File directory = new File(resource.getPath());
 		
 		String folderContents[] = directory.list();
 		ArrayList<String> quizFiles = new ArrayList<>();
@@ -89,9 +100,9 @@ public class QuizHelper
 	 * @return Quiz class object.
 	 */
 	
-	public static Quiz getQuiz(String quizName)
+	public Quiz getQuiz(String quizName)
 	{
-		String quizPath = QUIZ_PATH + quizName;
+		String quizPath = getQuizFilePath(quizName);
 		Quiz quiz = null;
 		
 		try
